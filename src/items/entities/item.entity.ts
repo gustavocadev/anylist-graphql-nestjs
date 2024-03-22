@@ -1,7 +1,14 @@
 import { ObjectType, Field, ID, Float } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-@Entity({ name: 'items' })
+@Entity({ name: 'item' })
 @ObjectType()
 export class Item {
   @PrimaryGeneratedColumn('uuid')
@@ -12,13 +19,19 @@ export class Item {
   @Field(() => String)
   name: string;
 
-  @Column('float')
-  @Field(() => Float)
-  quantity: number;
+  // @Column('float')
+  // @Field(() => Float)
+  // quantity: number;
 
   @Column('text', {
     nullable: true,
+    name: 'quantity_units',
   })
   @Field(() => String, { nullable: true })
   quantityUnits?: string;
+
+  @ManyToOne(() => User, (user) => user.items)
+  @JoinColumn({ name: 'user_id' })
+  @Field(() => User)
+  userId: User;
 }
