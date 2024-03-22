@@ -41,6 +41,7 @@ export class UsersService {
       return this.userRepository.find({
         relations: {
           lastUpdatedBy: true,
+          items: true,
         },
       });
 
@@ -50,7 +51,8 @@ export class UsersService {
       //where the user.roles contains any of the roles
       queryBuilder
         .where('user.roles && :roles', { roles: validRoles.roles })
-        .leftJoinAndSelect('user.lastUpdatedBy', 'lastUpdatedBy');
+        .leftJoinAndSelect('user.lastUpdatedBy', 'lastUpdatedBy')
+        .leftJoinAndSelect('user.items', 'items');
     }
     return queryBuilder.getMany();
   }
