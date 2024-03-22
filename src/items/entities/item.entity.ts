@@ -1,8 +1,9 @@
-import { ObjectType, Field, ID, Float } from '@nestjs/graphql';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '../../users/entities/user.entity';
 import {
   Column,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -30,7 +31,9 @@ export class Item {
   @Field(() => String, { nullable: true })
   quantityUnits?: string;
 
-  @ManyToOne(() => User, (user) => user.items)
+  // By default, the relation decorators are nullable: true. If you want to make them non-nullable, you can set the nullable option to false.
+  @ManyToOne(() => User, (user) => user.items, { nullable: false })
+  @Index()
   @JoinColumn({ name: 'user_id' })
   @Field(() => User)
   userId: User;
