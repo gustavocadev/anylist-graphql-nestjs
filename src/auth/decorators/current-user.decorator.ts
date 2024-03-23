@@ -5,10 +5,10 @@ import {
   createParamDecorator,
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { validRoles } from '../enums/valid-roles.enum';
+import { ValidRoles } from '../enums/valid-roles.enum';
 
 export const CurrentUser = createParamDecorator(
-  (roles: validRoles[] = [], context: ExecutionContext) => {
+  (roles: ValidRoles[] = [], context: ExecutionContext) => {
     const ctx = GqlExecutionContext.create(context);
     const user = ctx.getContext().req.user;
 
