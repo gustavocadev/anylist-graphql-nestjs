@@ -36,7 +36,6 @@ export class UsersService {
   }
 
   async findAll(validRoles: ValidRolesArgs) {
-    console.log(validRoles);
     if (validRoles.roles.length === 0)
       return this.userRepository.find({
         relations: {
