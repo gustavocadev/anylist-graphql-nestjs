@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Item } from '../../items/entities/item.entity';
+import { List } from '../../lists/entities/list.entity';
 import {
   Column,
   Entity,
@@ -7,6 +8,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Relation,
 } from 'typeorm';
 
 @Entity({ name: 'user' })
@@ -39,9 +41,14 @@ export class User {
   @ManyToOne(() => User, (user) => user.lastUpdatedBy, { nullable: true })
   @JoinColumn({ name: 'last_updated_by' })
   @Field(() => User, { nullable: true })
-  lastUpdatedBy?: User;
+  lastUpdatedBy?: Relation<User>;
 
   @OneToMany(() => Item, (item) => item.userId)
-  @Field(() => [Item], { defaultValue: [] })
-  items: Item[];
+  // I Commented this line because I gonna manage this with a @ResolveField
+  // @Field(() => [Item], { defaultValue: [] })
+  items: Relation<Item>[];
+
+  @OneToMany(() => List, (list) => list.userId)
+  // @Field(() => [List], { defaultValue: [] })
+  lists: Relation<List>[];
 }

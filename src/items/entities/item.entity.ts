@@ -7,6 +7,7 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Relation,
 } from 'typeorm';
 
 @Entity({ name: 'item' })
@@ -36,5 +37,5 @@ export class Item {
   @Index()
   @JoinColumn({ name: 'user_id' })
   @Field(() => User)
-  userId: User;
+  userId: Relation<User>;
 }
