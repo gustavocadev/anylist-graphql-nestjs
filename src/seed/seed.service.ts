@@ -55,9 +55,11 @@ export class SeedService {
   }
 
   async loadItems(users: User[]): Promise<void> {
-    const items = [];
+    const items: Promise<Item>[] = [];
+
     for (const item of SEED_ITEMS) {
-      const randomIdx = Math.round(Math.random() * users.length);
+      // needs to be floor to get a valid index, otherwise it will be out of bounds like 3 which is not valid
+      const randomIdx = Math.floor(Math.random() * users.length);
       const user = users.at(randomIdx);
 
       const newItem = this.itemService.create(item, user);
@@ -65,6 +67,6 @@ export class SeedService {
       items.push(newItem);
     }
 
-    Promise.all(items);
+    await Promise.all(items);
   }
 }
