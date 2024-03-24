@@ -1,11 +1,13 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '../../users/entities/user.entity';
+import { ListItem } from '../../list-item/entities/list-item.entity';
 import {
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Relation,
 } from 'typeorm';
@@ -38,4 +40,7 @@ export class Item {
   @JoinColumn({ name: 'user_id' })
   @Field(() => User)
   userId: Relation<User>;
+
+  @OneToMany(() => ListItem, (listItem) => listItem.itemId)
+  listItems: Relation<ListItem>[];
 }
