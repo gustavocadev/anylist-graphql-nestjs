@@ -5,10 +5,12 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Relation,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { ListItem } from '../../list-item/entities/list-item.entity';
 
 @Entity({ name: 'list' })
 @ObjectType()
@@ -27,4 +29,8 @@ export class List {
   @Index()
   @JoinColumn({ name: 'user_id' })
   userId: Relation<User>;
+
+  // @Field(() => [ListItem])
+  @OneToMany(() => ListItem, (listItem) => listItem.listId, { lazy: true })
+  listItems: Relation<ListItem>[];
 }
