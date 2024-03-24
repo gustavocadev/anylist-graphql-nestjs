@@ -4,9 +4,17 @@ import { SeedResolver } from './seed.resolver';
 import { UsersModule } from '../users/users.module';
 import { ItemsModule } from '../items/items.module';
 import { ConfigModule } from '@nestjs/config';
+import { ListItemModule } from '../list-item/list-item.module';
+import { ListsModule } from '../lists/lists.module';
 
 @Module({
   providers: [SeedResolver, SeedService],
-  imports: [UsersModule, ItemsModule, ConfigModule],
+  imports: [
+    UsersModule,
+    ItemsModule,
+    ConfigModule,
+    ListItemModule,
+    ListsModule,
+  ],
 })
 export class SeedModule {}
